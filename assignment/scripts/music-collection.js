@@ -54,4 +54,4 @@ const findByArtist = (artist) => {
 console.log('Testing the artist finder with an artist with mutliples:', findByArtist('Trampled by Turtles'));
 console.log('Testing the artist finder with an artist with one album:', findByArtist('Glass Animals'));
 console.log('Testing the artist finder with an artist not in collection:', findByArtist('Alice in Chains'));
-console.log('Testing the artist finder with a non-string input:', findByArtist(8));
+console.log('Testing the artist finder with a non-string input, expecting a return of false:', findByArtist(8));
