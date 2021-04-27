@@ -24,7 +24,7 @@ console.log('Filling up our collection:', addToCollection('In Rainbows', 'Radioh
 // Logging our results to make sure the pushes worked
 console.log(`That's a nice collection so far. It contains:`, collection);
 
-// Function to display the contents of our collection 
+// Function to display the contents of our collection
 function showCollection (array) {
   console.log(`The collection contains ${array.length} items currently.`);
   for (let items of array) {
@@ -34,3 +34,24 @@ function showCollection (array) {
 
 console.log(`Let's examine our new collection:`)
 showCollection(collection);
+
+const findByArtist = (artist) => {
+  let newArr = [];
+  if (typeof artist === 'string') {
+    for (let albums of collection) {
+      if (albums.artist === artist) {
+        newArr.push(albums);
+      } // end adding matching albums
+    } // end loop
+  } // end if artist is a string
+  else {
+    console.log('Please enter a string')
+    return false;
+  } // end not a string output
+  return newArr;
+} // end findByArtist
+
+console.log('Testing the artist finder with an artist with mutliples:', findByArtist('Trampled by Turtles'));
+console.log('Testing the artist finder with an artist with one album:', findByArtist('Glass Animals'));
+console.log('Testing the artist finder with an artist not in collection:', findByArtist('Alice in Chains'));
+console.log('Testing the artist finder with a non-string input:', findByArtist(8));
