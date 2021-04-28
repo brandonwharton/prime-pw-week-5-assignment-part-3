@@ -65,6 +65,42 @@ function search(obj) {
   } // end non-object and empty object finder
   else if (typeof obj === 'object') {
     for (let choices of collection) {
+      if (choices.artist === obj.artist && choices.title === obj.title ) {
+        searchArr.push(choices);
+      } // end if checking for artist and title
+      else if (choices.title === obj.title && choices.yearPublished === obj.yearPublished) {
+        searchArr.push(choices);
+      } // end else if checking for title and yearPublished
+      else if (choices.artist === obj.artist && choices.yearPublished === obj.yearPublished) {
+        searchArr.push(choices);
+      } // end else if checking for artist and yearPublished
+    } // end for of loop
+  } // end else if
+  return searchArr;
+} // end search
+
+console.log('Testing search function, expecting a hit', search({artist: 'Trampled by Turtles', yearPublished: 2008}));
+console.log('Testing search function, expecting a hit', search({artist: 'Muse', title: "Black Holes and Revelations"}));
+console.log('Testing search function, expecting a hit', search({title: 'If Sorrows Swim', yearPublished: 2014}));
+console.log('Testing search function, expecting an empty array', search({artist: 'Trampled by Turtles', yearPublished: 2020}));
+console.log('Testing search function, expecting an empty array', search({title: 'How To Be A Human Being', yearPublished: 2020}));
+console.log('Testing search function, expecting an empty array', search({artist: 'Radiohead', title: 'OK Computer'}));
+console.log('Testing search function, expecting an empty array', search({artist: 'Fleet Foxes', title: 'Fleet Foxes'}));
+console.log('Testing search function for not an object, expecting the full collection', search('Not an object'));
+console.log('Testing search function for an empty object, expecting the full collection', search( {} ));
+
+
+// The following is my first version of the first stretch goal. I read it to mean we needed to make
+// a function that would return albums that match any of the search criteria. I now know that's not
+// what was asked for, but thought I'd leave it here. This function takes in an object containing any
+// one, two, or all three keys of artist, title, and yearPublished.
+function searchAny(obj) {
+  let searchArr = [];
+  if (typeof obj !== 'object' || Object.entries(obj).length === 0) {
+    return collection;
+  } // end non-object and empty object finder
+  else if (typeof obj === 'object') {
+    for (let choices of collection) {
       if (choices.artist === obj.artist || choices.title === obj.title || choices.yearPublished === obj.yearPublished) {
         searchArr.push(choices);
       } // end if checking for values of obj
@@ -73,10 +109,10 @@ function search(obj) {
   return searchArr;
 } // end search
 
-console.log('Testing the search function, expecting two hits', search({artist: 'Muse', title: 'Duluth'}));
-console.log('Testing the search function, expecting three hits', search({artist: 'Trampled by Turtles', yearPublished: 2016}));
-console.log('Testing the search function, expecting three hits', search({title: 'If Sorrows Swim', yearPublished: 2007}));
-console.log('Testing the search function, expecting one hit', search({title: 'How To Be A Human Being', yearPublished: 2020}));
-console.log('Testing the search function, expecting an empty array', search({artist: 'Journey', yearPublished: 1996}));
-console.log('Testing the search function on a random string, expecting the full collection to return', search('Not an object'));
-console.log('Testing the search function on an empty object, expecting the full collection to return', search( { } ));
+console.log('Testing the searchAny function, expecting two hits', searchAny({artist: 'Muse', title: 'Duluth'}));
+console.log('Testing the searchAny function, expecting three hits', searchAny({artist: 'Trampled by Turtles', yearPublished: 2016}));
+console.log('Testing the searchAny function, expecting three hits', searchAny({title: 'If Sorrows Swim', yearPublished: 2007}));
+console.log('Testing the searchAny function, expecting one hit', searchAny({title: 'How To Be A Human Being', yearPublished: 2020}));
+console.log('Testing the searchAny function, expecting an empty array', searchAny({artist: 'Journey', yearPublished: 1996}));
+console.log('Testing the searchAny function on a random string, expecting the full collection to return', searchAny('Not an object'));
+console.log('Testing the searchAny function on an empty object, expecting the full collection to return', searchAny( { } ));
