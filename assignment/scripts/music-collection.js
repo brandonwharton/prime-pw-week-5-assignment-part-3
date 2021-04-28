@@ -35,6 +35,7 @@ function showCollection (array) {
 console.log(`Let's examine our new collection:`)
 showCollection(collection);
 
+// Function to find albums in the collection by searching an artist
 const findByArtist = (artist) => {
   let newArr = [];
   if (typeof artist === 'string') {
@@ -42,7 +43,7 @@ const findByArtist = (artist) => {
       if (albums.artist === artist) {
         newArr.push(albums);
       } // end adding matching albums
-    } // end loop
+    } // end for of
   } // end if artist is a string
   else {
     console.log('Please enter a string')
@@ -55,3 +56,27 @@ console.log('Testing the artist finder with an artist with mutliples:', findByAr
 console.log('Testing the artist finder with an artist with one album:', findByArtist('Glass Animals'));
 console.log('Testing the artist finder with an artist not in collection:', findByArtist('Alice in Chains'));
 console.log('Testing the artist finder with a non-string input, expecting a return of false:', findByArtist(8));
+
+// Stretch Goals
+function search(obj) {
+  let searchArr = [];
+  if (typeof obj !== 'object' || Object.entries(obj).length === 0) {
+    return collection;
+  } // end non-object and empty object finder
+  else if (typeof obj === 'object') {
+    for (let choices of collection) {
+      if (choices.artist === obj.artist || choices.title === obj.title || choices.yearPublished === obj.yearPublished) {
+        searchArr.push(choices);
+      } // end if checking for values of obj
+    } // end for of loop
+  } // end else if
+  return searchArr;
+} // end search
+
+console.log('Testing the search function, expecting two hits', search({artist: 'Muse', title: 'Duluth'}));
+console.log('Testing the search function, expecting three hits', search({artist: 'Trampled by Turtles', yearPublished: 2016}));
+console.log('Testing the search function, expecting three hits', search({title: 'If Sorrows Swim', yearPublished: 2007}));
+console.log('Testing the search function, expecting one hit', search({title: 'How To Be A Human Being', yearPublished: 2020}));
+console.log('Testing the search function, expecting an empty array', search({artist: 'Journey', yearPublished: 1996}));
+console.log('Testing the search function on a random string, expecting the full collection to return', search('Not an object'));
+console.log('Testing the search function on an empty object, expecting the full collection to return', search( { } ));
