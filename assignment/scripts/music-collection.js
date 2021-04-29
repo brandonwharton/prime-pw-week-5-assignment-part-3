@@ -3,23 +3,31 @@ console.log('***** Music Collection *****')
 let collection = [];
 
 // Function to add records to the collection variable
-function addToCollection (title, artist, yearPublished) {
+function addToCollection (title, artist, yearPublished, tracks) {
   const record = {
     title: title,
     artist: artist,
-    yearPublished: yearPublished
+    yearPublished: yearPublished,
+    tracks: tracks
   }; // end record
   collection.push(record);
   return record;
 } // end addToCollection
 
 // Using the addToCollection function to fill up an album collection
-console.log('Filling up our collection:', addToCollection('Trouble', 'Trampled by Turtles', 2007));
-console.log('Filling up our collection:', addToCollection('Duluth', 'Trampled by Turtles', 2008));
-console.log('Filling up our collection:', addToCollection('If Sorrows Swim', 'Greensky Bluegrass', 2014));
-console.log('Filling up our collection:', addToCollection('How To Be A Human Being', 'Glass Animals', 2016));
-console.log('Filling up our collection:', addToCollection('Black Holes and Revelations', 'Muse', 2006));
-console.log('Filling up our collection:', addToCollection('In Rainbows', 'Radiohead', 2007));
+// edit: after adding tracks to addToCollection, updated with 3 tracks from each album
+console.log('Filling up our collection:', addToCollection('Trouble', 'Trampled by Turtles', 2007, [{trackName: 'Valley', duration: 206},
+{trackName: 'Still in Love With You', duration: 155}, {trackName: 'Arming of Infants', duration: 140}]));
+console.log('Filling up our collection:', addToCollection('Duluth', 'Trampled by Turtles', 2008, [{trackName: 'November', duration: 218},
+{trackName: 'White Noise', duration: 127}, {trackName: 'Darkness and the Light', duration: 202}]));
+console.log('Filling up our collection:', addToCollection('If Sorrows Swim', 'Greensky Bluegrass', 2014, [{trackName: 'Windsheild', duration: 225},
+{trackName: 'Burn Them', duration: 201}, {trackName: 'A Letter to Seymour', duration: 145}]));
+console.log('Filling up our collection:', addToCollection('How To Be A Human Being', 'Glass Animals', 2016, [{trackName: 'Life Itself', duration: 282},
+{trackName: 'Youth', duration: 231}, {trackName: 'Season 2 Episode 3', duration: 244}]));
+console.log('Filling up our collection:', addToCollection('Black Holes and Revelations', 'Muse', 2006, [{trackName: 'Take a Bow', duration: 275},
+{trackName: 'Starlight', duration: 240}, {trackName: 'Supermassive Black Hole', duration: 209}]));
+console.log('Filling up our collection:', addToCollection('In Rainbows', 'Radiohead', 2007, [{trackName: '15 Step', duration: 238},
+{trackName: 'Bodysnatchers', duration: 242}, {trackName: 'Nude', duration: 255}]));
 
 // Logging our results to make sure the pushes worked
 console.log(`That's a nice collection so far. It contains:`, collection);
@@ -28,7 +36,7 @@ console.log(`That's a nice collection so far. It contains:`, collection);
 function showCollection (array) {
   console.log(`The collection contains ${array.length} items currently.`);
   for (let items of array) {
-    console.log(`${items.title} by ${items.artist} published in ${items.yearPublished}`);
+    console.log(`${items.title} by ${items.artist} published in ${items.yearPublished}:`);
   } // end loop
 } // end showCollection
 
