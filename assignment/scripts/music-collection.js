@@ -3,7 +3,7 @@ console.log('***** Music Collection *****')
 let collection = [];
 
 // Function to add records to the collection variable
-function addToCollection (title, artist, yearPublished, tracks) {
+function addToCollection (title, artist, yearPublished, tracks) { // tracks variable is an array of objects
   const record = {
     title: title,
     artist: artist,
@@ -37,6 +37,10 @@ function showCollection (array) {
   console.log(`The collection contains ${array.length} items currently.`);
   for (let items of array) {
     console.log(`${items.title} by ${items.artist} published in ${items.yearPublished}:`);
+// Looping through tracks while looping through the albums in collection
+    for (let i = 0; i < items.tracks.length; i++) {
+      console.log(`${i+1}. ${items.tracks[i].trackName}: ${items.tracks[i].duration}`);
+    } // end nested loop
   } // end loop
 } // end showCollection
 
