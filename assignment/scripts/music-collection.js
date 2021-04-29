@@ -86,6 +86,17 @@ function search(obj) {
       else if (choices.artist === obj.artist && choices.yearPublished === obj.yearPublished) {
         searchArr.push(choices);
       } // end else if checking for artist and yearPublished
+      for (let i=0; i<choices.tracks.length; i++) {
+        if (choices.artist === obj.artist && choices.tracks[i].trackName === obj.trackName) {
+          searchArr.push(choices);
+        } // end if checking for artist and trackName
+        else if (choices.title === obj.title && choices.tracks[i].trackName === obj.trackName) {
+          searchArr.push(choices);
+        } // end else if checking for title and trackName
+        else if (choices.yearPublished === obj.yearPublished && choices.tracks[i].trackName === obj.trackName) {
+          searchArr.push(choices);
+        } // end else if checking for yearPublished and trackName
+      }// end nested loop
     } // end for of loop
   } // end else if
   return searchArr;
@@ -94,12 +105,19 @@ function search(obj) {
 console.log('Testing search function, expecting a hit', search({artist: 'Trampled by Turtles', yearPublished: 2008}));
 console.log('Testing search function, expecting a hit', search({artist: 'Muse', title: "Black Holes and Revelations"}));
 console.log('Testing search function, expecting a hit', search({title: 'If Sorrows Swim', yearPublished: 2014}));
+
 console.log('Testing search function, expecting an empty array', search({artist: 'Trampled by Turtles', yearPublished: 2020}));
 console.log('Testing search function, expecting an empty array', search({title: 'How To Be A Human Being', yearPublished: 2020}));
 console.log('Testing search function, expecting an empty array', search({artist: 'Radiohead', title: 'OK Computer'}));
 console.log('Testing search function, expecting an empty array', search({artist: 'Fleet Foxes', title: 'Fleet Foxes'}));
+
 console.log('Testing search function for not an object, expecting the full collection', search('Not an object'));
 console.log('Testing search function for an empty object, expecting the full collection', search( {} ));
+
+console.log('Testing search function with tracks, expecting a hit', search({artist: 'Muse', trackName: 'Starlight'}));
+console.log('Testing search function with tracks, expecting a hit', search({title: 'Duluth', trackName: 'White Noise'}));
+console.log('Testing search function with tracks, expecting a hit', search({yearPublished: 2016, trackName: 'Youth'}));
+console.log('Testing search function with tracks, expecting an empty array', search({artist: 'Muse', trackName: 'Invincible'}));
 
 
 // The following is my first version of the first stretch goal. I read it to mean we needed to make
@@ -128,3 +146,20 @@ console.log('Testing the searchAny function, expecting one hit', searchAny({titl
 console.log('Testing the searchAny function, expecting an empty array', searchAny({artist: 'Journey', yearPublished: 1996}));
 console.log('Testing the searchAny function on a random string, expecting the full collection to return', searchAny('Not an object'));
 console.log('Testing the searchAny function on an empty object, expecting the full collection to return', searchAny( { } ));
+
+// I also made a quick function to add tracks to existing albums in our collection, in case we want more than just three tracks per
+// album. It searches for the album title in the function argument and adds a track using the song (trackName) and length (duration)
+// arguments.
+function addTracks (albumTitle, song, length) {
+  for (let selection of collection) {
+    if (selection.title === albumTitle) {
+      selection.tracks.push({trackName: song, duration: length})
+    }
+  } // end loop
+} // end addTracks
+
+addTracks ('Trouble', 'Salvation', 206);
+addTracks ('If Sorrows Swim', 'In Control', 273)
+showCollection(collection);
+console.log('Searching for a new track:', search({artist: 'Trampled by Turtles', trackName: 'Salvation'}));
+console.log('Searching for a new track:', search({yearPublished: 2014, trackName: 'In Control'}));
