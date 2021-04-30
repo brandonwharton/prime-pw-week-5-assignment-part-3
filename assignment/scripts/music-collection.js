@@ -47,6 +47,7 @@ function showCollection (array) {
 console.log(`Let's examine our new collection:`)
 showCollection(collection);
 
+console.log('******* End showCollection test *******')
 // Function to find albums in the collection by searching an artist
 const findByArtist = (artist) => {
   let newArr = [];
@@ -69,36 +70,68 @@ console.log('Testing the artist finder with an artist with one album:', findByAr
 console.log('Testing the artist finder with an artist not in collection:', findByArtist('Alice in Chains'));
 console.log('Testing the artist finder with a non-string input, expecting a return of false:', findByArtist(8));
 
+console.log('******* End findbyArtist testing *******')
 // Stretch Goals
 function search(obj) {
   let searchArr = [];
   if (typeof obj !== 'object' || Object.entries(obj).length === 0) {
     return collection;
   } // end non-object and empty object finder
-  else if (typeof obj === 'object') {
-    for (let choices of collection) {
-      if (choices.artist === obj.artist && choices.title === obj.title ) {
+  for (let choices of collection) {
+    if (choices.artist === obj.artist && Object.entries(obj).length === 1) {
+      searchArr.push(choices);
+    } // checking for artist only
+    else if (choices.title === obj.title && Object.entries(obj).length === 1) {
+      searchArr.push(choices);
+    } // checking for title only
+    else if (choices.yearPublished === obj.yearPublished && Object.entries(obj).length === 1) {
+      searchArr.push(choices);
+    } // checking for year published only
+    else if (choices.trackName === obj.trackName && Object.entries(obj).length === 1) {
+      searchArr.push(choices);
+    } // checking for trackName only
+    else if (choices.artist === obj.artist && choices.title === obj.title && Object.entries(obj).length === 2) {
+      searchArr.push(choices);
+    } // checking for artist and title
+    else if (choices.title === obj.title && choices.yearPublished === obj.yearPublished && Object.entries(obj).length === 2) {
+      searchArr.push(choices);
+    } // checking for title and yearPublished
+    else if (choices.artist === obj.artist && choices.yearPublished === obj.yearPublished && Object.entries(obj).length === 2) {
+      searchArr.push(choices);
+    } // checking for artist and yearPublished
+    else if
+    (choices.artist === obj.artist && choices.title === obj.title && choices.yearPublished === obj.yearPublished && Object.entries(obj).length === 3)
+      { searchArr.push(choices);
+    } // checking for artist, title, and yearPublished
+    for (let i=0; i<choices.tracks.length; i++) {
+      if (choices.artist === obj.artist && choices.tracks[i].trackName === obj.trackName && Object.entries(obj).length === 2) {
         searchArr.push(choices);
-      } // end if checking for artist and title
-      else if (choices.title === obj.title && choices.yearPublished === obj.yearPublished) {
+      } // checking for artist and trackName
+      else if (choices.title === obj.title && choices.tracks[i].trackName === obj.trackName && Object.entries(obj).length === 2) {
         searchArr.push(choices);
-      } // end else if checking for title and yearPublished
-      else if (choices.artist === obj.artist && choices.yearPublished === obj.yearPublished) {
+      } // checking for title and trackName
+      else if (choices.yearPublished === obj.yearPublished && choices.tracks[i].trackName === obj.trackName && Object.entries(obj).length === 2) {
         searchArr.push(choices);
-      } // end else if checking for artist and yearPublished
-      for (let i=0; i<choices.tracks.length; i++) {
-        if (choices.artist === obj.artist && choices.tracks[i].trackName === obj.trackName) {
-          searchArr.push(choices);
-        } // end if checking for artist and trackName
-        else if (choices.title === obj.title && choices.tracks[i].trackName === obj.trackName) {
-          searchArr.push(choices);
-        } // end else if checking for title and trackName
-        else if (choices.yearPublished === obj.yearPublished && choices.tracks[i].trackName === obj.trackName) {
-          searchArr.push(choices);
-        } // end else if checking for yearPublished and trackName
-      }// end nested loop
-    } // end for of loop
-  } // end else if
+      } // checking for yearPublished and trackName
+      else if
+      (choices.artist === obj.artist && choices.title === obj.title && choices.tracks[i].trackName === obj.trackName && Object.entries(obj).length === 3)
+        { searchArr.push(choices);
+      } // checking for artist, title, and trackName
+      else if
+      (choices.artist === obj.artist && choices.yearPublished === obj.yearPublished && choices.tracks[i].trackName === obj.trackName && Object.entries(obj).length === 3)
+        { searchArr.push(choices);
+      } // checking for artist, yearPublished, and trackName
+      else if
+      (choices.title === obj.title && choices.yearPublished === obj.yearPublished && choices.tracks[i].trackName === obj.trackName && Object.entries(obj).length === 3)
+        { searchArr.push(choices);
+      } // checking for title, yearPublished, and trackName
+      else if
+      (choices.artist === obj.artist && choices.yearPublished === obj.yearPublished && choices.tracks[i].trackName === obj.trackName
+       && choices.title === obj.title && Object.entries(obj).length === 4)
+        { searchArr.push(choices);
+      } // checking for artist, title, yearPublished, and trackName
+    }// end nested loop
+  } // end for of loop
   return searchArr;
 } // end search
 
@@ -119,7 +152,7 @@ console.log('Testing search function with tracks, expecting a hit', search({titl
 console.log('Testing search function with tracks, expecting a hit', search({yearPublished: 2016, trackName: 'Youth'}));
 console.log('Testing search function with tracks, expecting an empty array', search({artist: 'Muse', trackName: 'Invincible'}));
 
-
+console.log('******* End Search Testing *******')
 // The following is my first version of the first stretch goal. I read it to mean we needed to make
 // a function that would return albums that match any of the search criteria. I now know that's not
 // what was asked for, but thought I'd leave it here. This function takes in an object containing any
@@ -163,3 +196,11 @@ addTracks ('If Sorrows Swim', 'In Control', 273)
 showCollection(collection);
 console.log('Searching for a new track:', search({artist: 'Trampled by Turtles', trackName: 'Salvation'}));
 console.log('Searching for a new track:', search({yearPublished: 2014, trackName: 'In Control'}));
+
+function search2 (obj) {
+  let newArray = [];
+  if (typeof obj !== 'object' || Object.entries(obj).length === 0) {
+    return collection;
+  } // end non-object and empty object finder
+
+}
