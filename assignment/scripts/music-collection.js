@@ -20,7 +20,7 @@ console.log('Filling up our collection:', addToCollection('Trouble', 'Trampled b
 {trackName: 'Still in Love With You', duration: 155}, {trackName: 'Arming of Infants', duration: 140}]));
 console.log('Filling up our collection:', addToCollection('Duluth', 'Trampled by Turtles', 2008, [{trackName: 'November', duration: 218},
 {trackName: 'White Noise', duration: 127}, {trackName: 'Darkness and the Light', duration: 202}]));
-console.log('Filling up our collection:', addToCollection('If Sorrows Swim', 'Greensky Bluegrass', 2014, [{trackName: 'Windsheild', duration: 225},
+console.log('Filling up our collection:', addToCollection('If Sorrows Swim', 'Greensky Bluegrass', 2014, [{trackName: 'Windshield', duration: 225},
 {trackName: 'Burn Them', duration: 201}, {trackName: 'A Letter to Seymour', duration: 145}]));
 console.log('Filling up our collection:', addToCollection('How To Be A Human Being', 'Glass Animals', 2016, [{trackName: 'Life Itself', duration: 282},
 {trackName: 'Youth', duration: 231}, {trackName: 'Season 2 Episode 3', duration: 244}]));
@@ -44,10 +44,11 @@ function showCollection (array) {
   } // end loop
 } // end showCollection
 
+console.log('******* showCollection test *******')
 console.log(`Let's examine our new collection:`)
 showCollection(collection);
 
-console.log('******* End showCollection test *******')
+
 // Function to find albums in the collection by searching an artist
 const findByArtist = (artist) => {
   let newArr = [];
@@ -65,12 +66,12 @@ const findByArtist = (artist) => {
   return newArr;
 } // end findByArtist
 
+console.log('******* findbyArtist tests *******')
 console.log('Testing the artist finder with an artist with mutliples:', findByArtist('Trampled by Turtles'));
 console.log('Testing the artist finder with an artist with one album:', findByArtist('Glass Animals'));
 console.log('Testing the artist finder with an artist not in collection:', findByArtist('Alice in Chains'));
 console.log('Testing the artist finder with a non-string input, expecting a return of false:', findByArtist(8));
 
-console.log('******* End findbyArtist testing *******')
 // Stretch Goals
 function search(obj) {
   let searchArr = [];
@@ -87,9 +88,6 @@ function search(obj) {
     else if (choices.yearPublished === obj.yearPublished && Object.entries(obj).length === 1) {
       searchArr.push(choices);
     } // checking for year published only
-    else if (choices.trackName === obj.trackName && Object.entries(obj).length === 1) {
-      searchArr.push(choices);
-    } // checking for trackName only
     else if (choices.artist === obj.artist && choices.title === obj.title && Object.entries(obj).length === 2) {
       searchArr.push(choices);
     } // checking for artist and title
@@ -104,7 +102,10 @@ function search(obj) {
       { searchArr.push(choices);
     } // checking for artist, title, and yearPublished
     for (let i=0; i<choices.tracks.length; i++) {
-      if (choices.artist === obj.artist && choices.tracks[i].trackName === obj.trackName && Object.entries(obj).length === 2) {
+      if (choices.tracks[i].trackName === obj.trackName && Object.entries(obj).length === 1) {
+        searchArr.push(choices);
+      } // checking for trackName only
+      else if (choices.artist === obj.artist && choices.tracks[i].trackName === obj.trackName && Object.entries(obj).length === 2) {
         searchArr.push(choices);
       } // checking for artist and trackName
       else if (choices.title === obj.title && choices.tracks[i].trackName === obj.trackName && Object.entries(obj).length === 2) {
@@ -135,24 +136,39 @@ function search(obj) {
   return searchArr;
 } // end search
 
+console.log('******* Single argument search tests *******')
+console.log('Testing search function for artist, expecting two hits', search({artist: 'Trampled by Turtles'}));
+console.log('Testing search function for yearPublished, expecting two hits', search({yearPublished: 2007}));
+console.log('Testing search function for title, expecting a hit', search({title: 'If Sorrows Swim'}));
+console.log('Testing search function for trackName, expecting a hit', search({trackName: '15 Step'}));
+
+console.log('******* Two argument search tests *******');
 console.log('Testing search function, expecting a hit', search({artist: 'Trampled by Turtles', yearPublished: 2008}));
 console.log('Testing search function, expecting a hit', search({artist: 'Muse', title: "Black Holes and Revelations"}));
 console.log('Testing search function, expecting a hit', search({title: 'If Sorrows Swim', yearPublished: 2014}));
+console.log('Testing search function, expecting a hit', search({artist: 'Muse', trackName: 'Starlight'}));
+console.log('Testing search function, expecting a hit', search({title: 'Duluth', trackName: 'White Noise'}));
+console.log('Testing search function, expecting a hit', search({yearPublished: 2016, trackName: 'Youth'}));
 
-console.log('Testing search function, expecting an empty array', search({artist: 'Trampled by Turtles', yearPublished: 2020}));
+console.log('******* Three argument search tests *******');
+console.log('Testing search function, expecting a hit', search({artist: 'Glass Animals', title: 'How To Be A Human Being', yearPublished: 2016}));
+console.log('Testing search function, expecting a hit', search({artist: 'Trampled by Turtles', yearPublished: 2007, trackName: 'Arming of Infants'}));
+console.log('Testing search function, expecting a hit', search({artist: 'Muse', title: 'Black Holes and Revelations', trackName: 'Take a Bow'}));
+console.log('Testing search function, expecting a hit', search({title: 'If Sorrows Swim', yearPublished: 2014, trackName: 'Windshield'}));
+
+console.log('******* Four argument search test *******');
+console.log('Testing search function, expecting a hit', search({artist: 'Radiohead', title: 'In Rainbows', yearPublished: 2007, trackName: 'Nude'}));
+
+console.log('******* Search function test: fail cases *******');
+console.log('Testing search function, expecting an empty array', search({yearPublished: 2020}));
 console.log('Testing search function, expecting an empty array', search({title: 'How To Be A Human Being', yearPublished: 2020}));
-console.log('Testing search function, expecting an empty array', search({artist: 'Radiohead', title: 'OK Computer'}));
-console.log('Testing search function, expecting an empty array', search({artist: 'Fleet Foxes', title: 'Fleet Foxes'}));
-
+console.log('Testing search function, expecting an empty array', search({artist: 'Radiohead', title: 'OK Computer', yearPublished: 2007}));
+console.log('Testing search function, expecting an empty array', search({artist: 'Fleet Foxes', title: 'If Sorrows Swim', yearPublished: 2014, trackName: 'Letter to Seymour'}));
 console.log('Testing search function for not an object, expecting the full collection', search('Not an object'));
 console.log('Testing search function for an empty object, expecting the full collection', search( {} ));
-
-console.log('Testing search function with tracks, expecting a hit', search({artist: 'Muse', trackName: 'Starlight'}));
-console.log('Testing search function with tracks, expecting a hit', search({title: 'Duluth', trackName: 'White Noise'}));
-console.log('Testing search function with tracks, expecting a hit', search({yearPublished: 2016, trackName: 'Youth'}));
 console.log('Testing search function with tracks, expecting an empty array', search({artist: 'Muse', trackName: 'Invincible'}));
 
-console.log('******* End Search Testing *******')
+console.log('******* searchAny testing *******');
 // The following is my first version of the first stretch goal. I read it to mean we needed to make
 // a function that would return albums that match any of the search criteria. I now know that's not
 // what was asked for, but thought I'd leave it here. This function takes in an object containing any
@@ -191,11 +207,13 @@ function addTracks (albumTitle, song, length) {
   } // end loop
 } // end addTracks
 
-addTracks ('Trouble', 'Salvation', 206);
-addTracks ('If Sorrows Swim', 'In Control', 273)
+console.log('******* addTracks tests *******')
+console.log('Adding to Trouble by TBT:', addTracks ('Trouble', 'Salvation', 206));
+console.log('Adding to If Sorrows Swim by Greensky', addTracks ('If Sorrows Swim', 'In Control', 273));
+console.log('Checking collection to ensure tracks were added, and are numbered correctly');
 showCollection(collection);
-console.log('Searching for a new track:', search({artist: 'Trampled by Turtles', trackName: 'Salvation'}));
-console.log('Searching for a new track:', search({yearPublished: 2014, trackName: 'In Control'}));
+console.log('Searching for a newly added track:', search({artist: 'Trampled by Turtles', trackName: 'Salvation'}));
+console.log('Searching for a newly added track:', search({yearPublished: 2014, trackName: 'In Control', artist: 'Greensky Bluegrass'}));
 
 function search2 (obj) {
   let newArray = [];
