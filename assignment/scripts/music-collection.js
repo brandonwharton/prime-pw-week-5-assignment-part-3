@@ -48,7 +48,6 @@ console.log('******* showCollection test *******')
 console.log(`Let's examine our new collection:`)
 showCollection(collection);
 
-
 // Function to find albums in the collection by searching an artist
 const findByArtist = (artist) => {
   let newArr = [];
@@ -76,6 +75,7 @@ console.log('Testing the artist finder with a non-string input, expecting a retu
 function search(obj) {
   let searchArr = [];
   if (typeof obj !== 'object' || Object.entries(obj).length === 0) {
+    console.log('Please enter an object with at least one key-value pair');
     return collection;
   } // end non-object and empty object finder
   for (let choices of collection) {
@@ -215,10 +215,10 @@ showCollection(collection);
 console.log('Searching for a newly added track:', search({artist: 'Trampled by Turtles', trackName: 'Salvation'}));
 console.log('Searching for a newly added track:', search({yearPublished: 2014, trackName: 'In Control', artist: 'Greensky Bluegrass'}));
 
-function search2 (obj) {
-  let newArray = [];
-  if (typeof obj !== 'object' || Object.entries(obj).length === 0) {
-    return collection;
-  } // end non-object and empty object finder
-
-}
+// Starting a different approach to the search function based on something that James showed us at study group.
+// function search2 (obj) {
+//   let newArray = [];
+//   if (typeof obj !== 'object' || Object.entries(obj).length === 0) {
+//     return collection;
+//   } // end non-object and empty object finder
+// }
