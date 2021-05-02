@@ -215,10 +215,33 @@ showCollection(collection);
 console.log('Searching for a newly added track:', search({artist: 'Trampled by Turtles', trackName: 'Salvation'}));
 console.log('Searching for a newly added track:', search({yearPublished: 2014, trackName: 'In Control', artist: 'Greensky Bluegrass'}));
 
-// Starting a different approach to the search function based on something that James showed us at study group.
-// function search2 (obj) {
-//   let newArray = [];
-//   if (typeof obj !== 'object' || Object.entries(obj).length === 0) {
-//     return collection;
-//   } // end non-object and empty object finder
-// }
+//Starting a different approach to the search function based on something that James showed us at study group.
+function search2 (obj) {
+  let newArray = [];
+  let newArray2 = [];
+  let objArr = Object.entries(obj);
+  let matched = false;
+  if (typeof obj !== 'object' || objArr.length === 0) {
+    return collection;
+  } // end non-object and empty object finder
+  for (let [key, value] of objArr) {
+    for (let choice of collection) {
+      for (i=0; i<choice.tracks.length; i++) {
+        if (choice[key] === value || choice.tracks[i][key] === value) {
+          console.log('A Match!')
+          matched = true;
+          newArray2.push(choice);
+          break;
+        }// end if statement
+
+      matched = false;
+    } // end for loop
+
+  } // end for of choice loop
+} // end for of objArr loop
+
+  if (matched) {
+    newArray.push(newArray2[0]);
+  return newArray;
+  }
+} // end search2
